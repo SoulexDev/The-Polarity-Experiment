@@ -43,12 +43,13 @@ public class GameProgression : MonoBehaviour
 
     public void StartGame()
     {
-        if (playerID.text == "" || playerID.text.Length > 15 || playerID.text.Length < 6)
+        memberID = ProfanityCheck(playerID.text);
+        if (memberID == "" || memberID.Length > 15 || memberID.Length < 6)
         {
             invalidNotif.SetActive(true);
+            memberID = "";
             return;
         }
-        memberID = ProfanityCheck(playerID.text);
         Login();
         minutes = 0;
         seconds = 0;
