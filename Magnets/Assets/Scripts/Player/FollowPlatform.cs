@@ -16,7 +16,6 @@ public class FollowPlatform : MonoBehaviour
         if (other.tag == "Activant")
         {
             other.transform.SetParent(null);
-            Debug.Log("Exit");
         }
     }
 }

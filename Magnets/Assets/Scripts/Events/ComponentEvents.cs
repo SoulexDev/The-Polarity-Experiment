@@ -30,6 +30,11 @@ public class ComponentEvents : MonoBehaviour, IReceptical
         connectionAmount = 0;
     }
 
+    public void OverrideDeactivate()
+    {
+        
+    }
+
     private void Update()
     {
         if(active && !eventPlayed)

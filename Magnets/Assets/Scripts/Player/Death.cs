@@ -6,9 +6,9 @@ using UnityEngine.Events;
 public class Death : MonoBehaviour
 {
     [SerializeField] private GameObject magnetGun;
-    private void Start()
+    private void Awake()
     {
-        if(GameProgression.Instance.checkPointPos != Vector3.zero)
+        if(GameProgression.Instance != null && GameProgression.Instance.checkPointPos != Vector3.zero)
         {
             transform.position = GameProgression.Instance.checkPointPos;
 
@@ -17,6 +17,11 @@ public class Death : MonoBehaviour
             if (GameProgression.Instance.level > 0)
                 magnetGun.SetActive(true);
         }
-        GameProgression.Instance.UpdateLeaderBoards();
+        else
+        {
+            transform.position = new Vector3(0, 1, 0);
+        }
+        if(GameProgression.Instance != null)
+            GameProgression.Instance.UpdateLeaderBoards();
     }
 }

@@ -51,6 +51,12 @@ public class StandButton : MonoBehaviour, ISource
             if (activantAmount == 0)
                 source.PlayOneShot(clips[1]);
         }
+        if(other == null)
+        {
+            activantAmount--;
+            if (activantAmount == 0)
+                source.PlayOneShot(clips[1]);
+        }
     }
     private void Update()
     {

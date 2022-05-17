@@ -26,6 +26,8 @@ public class HeadBob : MonoBehaviour
     void Update()
     {
         Vector3 moveDirection = controller.controller.velocity;
+        if (!controller.Grounded())
+            return;
         if (Mathf.Abs(moveDirection.x) > 0.1f || Mathf.Abs(moveDirection.z) > 0.1f)
         {
             timer += Time.deltaTime * walkingBobbingSpeed;

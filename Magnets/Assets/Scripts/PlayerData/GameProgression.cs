@@ -13,7 +13,7 @@ public class GameProgression : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -53,7 +53,7 @@ public class GameProgression : MonoBehaviour
         Login();
         minutes = 0;
         seconds = 0;
-        SceneManager.LoadSceneAsync("GameScene");
+        SceneManager.LoadSceneAsync("Tutorial");
     }
     private void Update()
     {
@@ -117,6 +117,8 @@ public class GameProgression : MonoBehaviour
             if (response.statusCode == 200)
             {
                 LootLockerLeaderboardMember[] scores = response.items;
+                if (scores.Length == 0)
+                    return;
                 for (int w = 0; w < scores.Length; w++)
                 {
                     levelLeaderboards[i].boardInfo[w].text = scores[w].rank + ". " + ProfanityCheck(scores[w].metadata, "***") + ": " + scores[w].score;

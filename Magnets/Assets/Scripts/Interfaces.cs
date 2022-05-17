@@ -15,4 +15,5 @@ public interface IReceptical
     public void Activate(ISource source);
     public void Deactivate(ISource source);
     public void OverrideActivate();
+    public void OverrideDeactivate();
 }

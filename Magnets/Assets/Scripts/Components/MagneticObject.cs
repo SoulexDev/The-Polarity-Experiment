@@ -6,15 +6,17 @@ public class MagneticObject : MonoBehaviour
 {
     public enum Pole { Positive, Negative, Both }
     public Pole pole;
+    [HideInInspector] public Pole conPole;
     public Rigidbody rb;
     public Transform connection;
     public Transform magnet;
     public bool connected = false;
 
-    public virtual void Connect(Transform conn, Transform mag)
+    public virtual void Connect(Transform conn, Transform mag, Pole pole)
     {
         connection = conn;
         magnet = mag;
+        conPole = pole;
         magnet.SetParent(transform);
         connected = true;
     }

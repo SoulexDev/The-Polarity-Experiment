@@ -8,7 +8,8 @@ public class LeaderBoardManager : MonoBehaviour
     [SerializeField] private GameObject leaderboardUI;
     private void Start()
     {
-        GameProgression.Instance.levelLeaderboards = levelLeaderboards;
+        if(GameProgression.Instance != null)
+            GameProgression.Instance.levelLeaderboards = levelLeaderboards;
     }
     void Update()
     {

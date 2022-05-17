@@ -5,7 +5,7 @@ using UnityEngine;
 public class MagnetGuns : MonoBehaviour
 {
     [SerializeField] private string mouseInput = "Fire1";
-    [SerializeField] private Transform magnetBone;
+    public Transform magnetBone;
     [SerializeField] private Transform cableBone;
     [SerializeField] private Transform gunBone;
     [SerializeField] private Transform cam;
@@ -25,6 +25,7 @@ public class MagnetGuns : MonoBehaviour
     bool retracting = false;
     bool connected = false;
     bool letGo = false;
+    bool dontDestroy = false;
 
     Vector3 gPoint;
     Quaternion gRot;
@@ -32,7 +33,7 @@ public class MagnetGuns : MonoBehaviour
 
     RaycastHit hit;
 
-    private MagneticObject conMag;
+    [HideInInspector] public MagneticObject conMag;
     int layerMask = 1 << 2;
     private void Awake()
     {
@@ -52,6 +53,16 @@ public class MagnetGuns : MonoBehaviour
     {
         PlayerInput();
         UpdateExtensions();
+
+        if(magnetBone.parent == null && !dontDestroy)
+        {
+            DontDestroyOnLoad(magnetBone.gameObject);
+            dontDestroy = true;
+        }
+        else if(magnetBone.parent != null)
+        {
+            dontDestroy = false;
+        }
     }
     private void LateUpdate()
     {
@@ -84,7 +95,6 @@ public class MagnetGuns : MonoBehaviour
             }
             curPoint++;
             points.Insert(curPoint, point);
-            Debug.Log("added point");
         }
         if(curPoint > 0 && !Physics.Linecast(points[curPoint - 1], points[points.Count - 1], ropeMask))
         {
@@ -132,15 +142,7 @@ public class MagnetGuns : MonoBehaviour
                     source.Stop();
                     source.PlayOneShot(magnetClips[1]);
                 }
-                extended = false;
-                retracting = false;
-                connected = false;
-
-                conMag.Disconnect();
-                conMag = null;
-
-                magnetBone.SetParent(gunBone);
-                magnetBone.localPosition = ogPos;
+                ConnectMagnet();
             }
         }
         else if(connected)
@@ -150,11 +152,7 @@ public class MagnetGuns : MonoBehaviour
         }
         if (Input.GetButtonUp(mouseInput) && connected && letGo)
         {
-            extended = false;
-            conMag.Disconnect();
-            conMag = null;
-            letGo = false;
-            connected = false;
+            RetractMagnet();
         }
     }
     void UpdateExtensions()
@@ -178,7 +176,7 @@ public class MagnetGuns : MonoBehaviour
         {
             if (Vector3.Distance(magnetBone.position, gunBone.TransformPoint(ogPos)) > 0.15f)
             {
-                magnetBone.position = Vector3.MoveTowards(magnetBone.position, gunBone.TransformPoint(ogPos), 0.35f);
+                magnetBone.position = Vector3.MoveTowards(magnetBone.position, gunBone.TransformPoint(ogPos), 0.35f * Time.deltaTime * 60);
                 if(!source.isPlaying)
                     source.PlayOneShot(ropeClips[1]);
             }
@@ -203,14 +201,14 @@ public class MagnetGuns : MonoBehaviour
     IEnumerator ExtendMagnet(Vector3 hitPoint)
     {
         extended = true;
-        magnetBone.transform.SetParent(null);
+        magnetBone.SetParent(null);
 
         source.PlayOneShot(magnetClips[0]);
         source.PlayOneShot(ropeClips[0]);
 
         while (Vector3.Distance(magnetBone.position, hitPoint) > 0.5f)
         {
-            magnetBone.position = Vector3.MoveTowards(magnetBone.position, hitPoint, 0.5f);
+            magnetBone.position = Vector3.MoveTowards(magnetBone.position, hitPoint, 0.5f * Time.deltaTime * 60);
             yield return null;
         }
         retracting = true;
@@ -221,7 +219,7 @@ public class MagnetGuns : MonoBehaviour
             {
                 conMag = magneticObject;
                 magnetBone.rotation = gRot;
-                conMag.Connect(gunBone, magnetBone);
+                conMag.Connect(gunBone, magnetBone, pole);
                 connected = true;
                 source.Stop();
                 StopAllCoroutines();
@@ -234,16 +232,18 @@ public class MagnetGuns : MonoBehaviour
     }
     void ExecuteConnected()
     {
-        conMag.Execute();
+        if (conMag != null)
+            conMag.Execute();
     }
     void StopExecuteConnected()
     {
-        conMag.StopExecute();
+        if(conMag != null)
+            conMag.StopExecute();
     }
     Vector3 GetRayPoint()
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        if (Physics.Raycast(ray, out hit, 10))
+        if (Physics.Raycast(ray, out hit, 15, ~LayerMask.GetMask("PlayerCollision", "Ignore Raycast")))
         {
             gRot = Quaternion.LookRotation(hit.normal, Vector3.up) * Quaternion.Euler(new Vector3(-90, 0, 0));
             return hit.point;
@@ -251,7 +251,35 @@ public class MagnetGuns : MonoBehaviour
         else
         {
             gRot = gunBone.transform.rotation;
-            return ray.GetPoint(10);
+            return ray.GetPoint(15);
         }
+    }
+    public void ConnectMagnet()
+    {
+        //source.Stop();
+        extended = false;
+        retracting = false;
+        connected = false;
+
+        if(conMag != null)
+        {
+            conMag.Disconnect();
+            conMag = null;
+        }
+
+        magnetBone.position = gunBone.TransformPoint(ogPos);
+        magnetBone.SetParent(gunBone);
+        magnetBone.localPosition = ogPos;
+    }
+    public void RetractMagnet()
+    {
+        if (magnetBone.parent == null)
+            return;
+        extended = false;
+        if(conMag != null)
+            conMag.Disconnect();
+        conMag = null;
+        letGo = false;
+        connected = false;
     }
 }

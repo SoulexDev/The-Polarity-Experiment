@@ -6,6 +6,7 @@ public class Interact : MonoBehaviour
 {
     private IInteractable interactable;
     [SerializeField] private GameObject interactVisual;
+    float holdCounter = 0;
     void Update()
     {
         PlayerInput();
@@ -29,8 +30,18 @@ public class Interact : MonoBehaviour
         if (Input.GetButtonDown("Interact"))
         {
             if(interactable != null)
+            {
+                interactable.Interact();
+            }
+        }
+        if (Input.GetButton("Interact"))
+        {
+            holdCounter += Time.deltaTime;
+            if (holdCounter >= 1 && interactable != null)
                 interactable.Interact();
         }
+        else
+            holdCounter = 0;
         interactVisual.SetActive(interactable != null);
     }
 }
