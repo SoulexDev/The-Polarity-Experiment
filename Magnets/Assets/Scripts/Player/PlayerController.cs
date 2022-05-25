@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 lastDir;
     Vector3 moveDir;
+    Vector3 lerpDir;
     Vector3 yVel;
     Vector3 groundNormal;
     int layerMask = 1 << 2;
@@ -91,9 +92,18 @@ public class PlayerController : MonoBehaviour
         }
         if (!controller.enabled)
             return;
+
+        if (lastDir != Vector3.zero)
+            lerpDir = new Vector3(lastDir.x, 0, lastDir.z);
         if (Grounded())
         {
             lastDir = moveDir;
+            if(moveDir.magnitude == 0)
+            {
+                lerpDir = Vector3.Lerp(lerpDir, Vector3.zero, Time.deltaTime * 10);
+                controller.Move(lerpDir * Time.deltaTime);
+            }
+
             if (!airborne)
             {
                 yVel.y = 0;
@@ -149,7 +159,7 @@ public class PlayerController : MonoBehaviour
     public bool Grounded()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.2f, ~layerMask))
+        if (Physics.SphereCast(transform.position, 0.35f, Vector3.down, out hit, 0.85f, ~layerMask))
         {
             groundNormal = hit.normal;
             return true;

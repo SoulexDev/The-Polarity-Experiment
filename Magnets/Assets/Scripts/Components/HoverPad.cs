@@ -9,6 +9,7 @@ public class HoverPad : MonoBehaviour, IReceptical
     [SerializeField] private AudioClip[] clips;
     [SerializeField] private List<Vector3> waypoints = new List<Vector3>();
     [SerializeField] bool stopAtCheckPoints;
+    [SerializeField] bool invertPower = false;
     //bool activeStopped;
     //bool deactivatedStopped;
     bool startCondition = false;
@@ -25,6 +26,7 @@ public class HoverPad : MonoBehaviour, IReceptical
     {
         waypoints.Insert(0, transform.position);
         source = GetComponent<AudioSource>();
+        direction = Direction.forward;
     }
     public void Activate(ISource source)
     {
@@ -80,9 +82,10 @@ public class HoverPad : MonoBehaviour, IReceptical
         //        deactivatedStopped = true;
         //    }
         //}
+        bool active = isActivated != invertPower;
         if (stopAtCheckPoints)
         {
-            if (isActivated)
+            if (active)
             {
                 if (!startCondition)
                 {
@@ -96,6 +99,10 @@ public class HoverPad : MonoBehaviour, IReceptical
                 }
                 if (transform.position != waypoints[curWayPoint])
                     transform.position = Vector3.MoveTowards(transform.position, waypoints[curWayPoint], speed * Time.deltaTime * 10);
+                else if(curWayPoint != waypoints.Count - 1)
+                {
+                    CheckDir();
+                }
             }
             else
             {
@@ -110,7 +117,7 @@ public class HoverPad : MonoBehaviour, IReceptical
         }
         else
         {
-            if (isActivated)
+            if (active)
             {
                 if (transform.position != waypoints[curWayPoint])
                     transform.position = Vector3.MoveTowards(transform.position, waypoints[curWayPoint], speed * Time.deltaTime * 10);

@@ -17,3 +17,7 @@ public interface IReceptical
     public void OverrideActivate();
     public void OverrideDeactivate();
 }
+public interface IDamageable
+{
+    public void TakeDamage(float amount);
+}

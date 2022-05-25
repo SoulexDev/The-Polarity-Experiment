@@ -14,7 +14,7 @@ public class StandButton : MonoBehaviour, ISource
     [SerializeField] private AudioClip[] clips;
     private Material[] mats;
     private Renderer rend;
-    private float glowMatEmis = 1;
+    private float glowMatEmis = 0;
     bool active { get { return activantAmount > 0; } }
     private void Awake()
     {
@@ -74,7 +74,7 @@ public class StandButton : MonoBehaviour, ISource
             {
                 receptical.Deactivate(this);
             }
-            glowMatEmis = Mathf.Lerp(glowMatEmis, 1, Time.deltaTime * 5);
+            glowMatEmis = Mathf.Lerp(glowMatEmis, 0, Time.deltaTime * 5);
         }
         glowMat.SetFloat("Emission_Power", glowMatEmis);
     }
