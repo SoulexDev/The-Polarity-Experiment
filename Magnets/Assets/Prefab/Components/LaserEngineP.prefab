@@ -108,5 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a7a00fe17a7464c838cb789b6586e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pole: 0
   connectionAmount: 1
   receivent: []

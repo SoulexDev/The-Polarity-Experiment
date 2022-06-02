@@ -451,6 +451,7 @@ MonoBehaviour:
     m_Bits: 243
   points: []
   curPoint: 0
+  conMag: {fileID: 0}
 --- !u!114 &4814901996916264825
 MonoBehaviour:
   m_ObjectHideFlags: 0

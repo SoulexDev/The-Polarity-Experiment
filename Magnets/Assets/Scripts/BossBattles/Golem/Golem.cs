@@ -7,11 +7,13 @@ using UnityEngine.Animations.Rigging;
 
 public class Golem : MonoBehaviour
 {
-    [SerializeField] private Transform chestBone;
+    [SerializeField] private Transform[] spineBones;
     [SerializeField] private Transform chainsawDistCheck;
     [SerializeField] private Transform shootPos;
+    [SerializeField] private Transform chainsawCenter;
     [SerializeField] private ParticleSystem gunCharge;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject laser;
     private NavMeshAgent agent;
     private Animator anims;
     private AimIK leftArmAim;
@@ -27,7 +29,7 @@ public class Golem : MonoBehaviour
     private AttackState attackState;
     private System.Random rand = new System.Random();
     Transform target;
-    Quaternion prevChestRot;
+    Quaternion[] prevSpineRots = new Quaternion[2];
     bool shooting = false;
     void Start()
     {
@@ -60,7 +62,7 @@ public class Golem : MonoBehaviour
         if(timer > 0.5f)
         {
             feetForward = chestForward;
-            Quaternion rotTo = Quaternion.LookRotation(Vector3.ProjectOnPlane(prevChestRot * Vector3.forward, Vector3.up), Vector3.up);
+            Quaternion rotTo = Quaternion.LookRotation(Vector3.ProjectOnPlane(prevSpineRots[0] * Vector3.forward, Vector3.up), Vector3.up);
             float curY = transform.rotation.eulerAngles.y > 180 ? transform.rotation.eulerAngles.y - 360 : transform.rotation.eulerAngles.y;
             float newY = rotTo.eulerAngles.y > 180 ? rotTo.eulerAngles.y - 360 : rotTo.eulerAngles.y;
 
@@ -99,17 +101,31 @@ public class Golem : MonoBehaviour
         }
         else
             shooting = false;
+        if(attackState == AttackState.Chainsaw)
+        {
+            Collider[] cols = Physics.OverlapBox(chainsawCenter.position, new Vector3(0.875f, 2.5f, 0.5f), chainsawCenter.rotation);
+            foreach (Collider col in cols)
+            {
+                if (col.TryGetComponent(out IPlayer player))
+                {
+                    player.TakeDamage(Time.deltaTime * 5);
+                }
+            }
+        }
+        laser.SetActive(attackState == AttackState.Laser);
     }
     private void LateUpdate()
     {
         if(target != null)
         {
-            Quaternion chestLookAt = Quaternion.LookRotation(target.position - chestBone.position, Vector3.up);
-            chestBone.rotation = Quaternion.Slerp(prevChestRot, chestLookAt, Time.deltaTime * 10);
-
-            prevChestRot = chestBone.rotation;
+            for (int i = 0; i < spineBones.Length; i++)
+            {
+                Quaternion spineLookAt = Quaternion.LookRotation(target.position - spineBones[i].position, Vector3.up);
+                spineBones[i].rotation = Quaternion.Slerp(prevSpineRots[i], spineLookAt, Time.deltaTime * 10);
+                prevSpineRots[i] = spineBones[i].rotation;
+            }
         }
-        chestForward = Vector3.ProjectOnPlane(chestBone.forward, Vector3.up).normalized;
+        chestForward = Vector3.ProjectOnPlane(spineBones[0].forward, Vector3.up).normalized;
     }
     void Turn(float turnVal)
     {

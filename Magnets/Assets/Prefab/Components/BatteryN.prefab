@@ -134,6 +134,7 @@ MonoBehaviour:
   magnet: {fileID: 0}
   connected: 0
   collisionClip: {fileID: 8300000, guid: 0b773e6271404c848b390134291b1ead, type: 3}
+  grabSpeed: 15
 --- !u!82 &1144186903620376366
 AudioSource:
   m_ObjectHideFlags: 0

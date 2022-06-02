@@ -210,3 +210,4 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: a51cea74e9c24134f8673cbccc73b455, type: 3}
   - {fileID: 8300000, guid: 1de244c6323bfb34ba231f5b27cd5654, type: 3}
+  openPos: {x: 0, y: 3, z: 0}

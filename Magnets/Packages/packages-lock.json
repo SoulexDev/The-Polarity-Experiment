@@ -7,6 +7,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.kink3d.mirrors": {
+      "version": "https://github.com/Kink3d/kMirrors.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "7.x.x"
+      },
+      "hash": "79b0526e5da06689f12a7f4846b2b568e997be35"
+    },
     "com.lootlocker.lootlockersdk": {
       "version": "https://github.com/LootLocker/unity-sdk.git",
       "depth": 0,
@@ -15,6 +24,12 @@
         "com.unity.nuget.newtonsoft-json": "2.0.0"
       },
       "hash": "afa248f161000798216db6f3380302be1aacf27e"
+    },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
     },
     "com.unity.2d.tilemap": {
       "version": "1.0.0",

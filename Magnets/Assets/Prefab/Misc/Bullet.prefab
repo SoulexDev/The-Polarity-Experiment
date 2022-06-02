@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8859085394275505161}
   - component: {fileID: 8859085394275505167}
   - component: {fileID: 8859085394275505160}
+  - component: {fileID: 5487997458684420482}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -104,7 +105,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9005e2ab2fa549145994f01592a28f1a, type: 2}
+  - {fileID: 2100000, guid: 6b7f9d811c9e993468d1b816618b281e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,5 +220,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae7dfa2b184aed4db3b2cb690a62a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  speed: 25
   rb: {fileID: 8859085394275505167}
+--- !u!135 &5487997458684420482
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8516486027381680474}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25229836
+  m_Center: {x: 0, y: -0.000000014901161, z: 0.061705925}

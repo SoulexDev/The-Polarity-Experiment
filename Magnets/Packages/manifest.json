@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "com.kink3d.mirrors": "https://github.com/Kink3d/kMirrors.git",
     "com.lootlocker.lootlockersdk": "https://github.com/LootLocker/unity-sdk.git",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap.extras": "1.8.3-preview",
     "com.unity.animation.rigging": "1.0.3",
     "com.unity.collab-proxy": "1.15.4",

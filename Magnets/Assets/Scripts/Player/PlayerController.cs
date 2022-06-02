@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!Player.Instance.canMove)
+            return;
         PlayerInput();
         CamMovement();
         Movement();

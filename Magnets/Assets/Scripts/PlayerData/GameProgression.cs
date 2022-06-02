@@ -43,14 +43,14 @@ public class GameProgression : MonoBehaviour
 
     public void StartGame()
     {
-        memberID = ProfanityCheck(playerID.text);
-        if (memberID == "" || memberID.Length > 15 || memberID.Length < 6)
-        {
-            invalidNotif.SetActive(true);
-            memberID = "";
-            return;
-        }
-        Login();
+        //memberID = ProfanityCheck(playerID.text);
+        //if (memberID == "" || memberID.Length > 15 || memberID.Length < 6)
+        //{
+        //    invalidNotif.SetActive(true);
+        //    memberID = "";
+        //    return;
+        //}
+        //Login();
         minutes = 0;
         seconds = 0;
         SceneManager.LoadSceneAsync("Tutorial");

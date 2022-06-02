@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private UnityEvent preLoadEvent;
     [SerializeField] private UnityEvent postLoadEvent;
     [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private bool levelStart;
     float vol;
     bool entered = false;
 
@@ -30,6 +31,8 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         postLoadEvent.Invoke();
+        if (levelStart)
+            LoadState();
     }
     public void SaveState()
     {

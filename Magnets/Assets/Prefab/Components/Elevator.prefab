@@ -206,6 +206,7 @@ MonoBehaviour:
   clips: []
   waypoints: []
   stopAtCheckPoints: 0
+  invertPower: 0
 --- !u!82 &8142432489402099266
 AudioSource:
   m_ObjectHideFlags: 0

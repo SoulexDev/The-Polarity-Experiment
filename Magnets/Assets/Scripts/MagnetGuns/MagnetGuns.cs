@@ -51,6 +51,8 @@ public class MagnetGuns : MonoBehaviour
 
     void Update()
     {
+        if (!Player.Instance.canMove)
+            return;
         PlayerInput();
         UpdateExtensions();
 

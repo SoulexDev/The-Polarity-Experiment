@@ -21,3 +21,7 @@ public interface IDamageable
 {
     public void TakeDamage(float amount);
 }
+public interface IPlayer
+{
+    public void TakeDamage(float amount);
+}

@@ -10,4 +10,12 @@ public class Bullet : MonoBehaviour
     {
         rb.AddForce(direction * speed * 100);
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.TryGetComponent(out IPlayer player))
+        {
+            player.TakeDamage(10);
+        }
+        Destroy(gameObject);
+    }
 }

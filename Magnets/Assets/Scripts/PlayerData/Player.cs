@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool canMove = true;
+    public bool dead = false;
     public Vector3 levelLoadPosition;
     public float camX, camY;
     public static Player Instance { get; private set; }
@@ -24,6 +26,8 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if (dead)
+            canMove = false;
         if (transform.parent == null)
         {
             if (dontDestroy)

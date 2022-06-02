@@ -33,6 +33,7 @@ Transform:
   m_Children:
   - {fileID: 3097436335354341381}
   - {fileID: 7123395415913807338}
+  - {fileID: 6472167393394951858}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,6 +105,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   audioMixer: {fileID: 24100000, guid: 2d04a95a75707654ba21ec3907cbd8b0, type: 2}
+  levelStart: 0
 --- !u!114 &6671693539381990795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +209,84 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1146866556394216110, guid: 3fbae53d4a25c9c478011c748baced37, type: 3}
   m_PrefabInstance: {fileID: 2672377172379431595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7800277146183234335
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 391401150161404711}
+    m_Modifications:
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710784
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710576
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8384171253977651000, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_Name
+      value: CeilingLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 8991039505386677036, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_Range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8991039505386677036, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_Intensity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8991039505386677036, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_SpotAngle
+      value: 178.41272
+      objectReference: {fileID: 0}
+    - target: {fileID: 8991039505386677036, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 148.4127
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+--- !u!4 &6472167393394951858 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3860120654572778925, guid: e84e7f47f69f74845b65834bfc6fb613, type: 3}
+  m_PrefabInstance: {fileID: 7800277146183234335}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7868104577853630276
 PrefabInstance:

@@ -110,6 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   receivent: []
+  toggle: 0
+  timer: 0.1
 --- !u!82 &8677714063094506050
 AudioSource:
   m_ObjectHideFlags: 0
