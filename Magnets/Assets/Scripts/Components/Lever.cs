@@ -28,7 +28,7 @@ public class Lever : MagneticObject, ISource
     }
     public override void Execute()
     {
-        Vector3 connDir = connection.position - transform.position;
+        Vector3 connDir = (magnetGun.pointPos - transform.position).normalized;
         Vector3 absoluteForward = Vector3.ProjectOnPlane(-transform.parent.forward, Vector3.up).normalized;
 
         if(conPole == Pole.Positive)

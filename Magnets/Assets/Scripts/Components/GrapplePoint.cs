@@ -5,16 +5,16 @@ using UnityEngine;
 public class GrapplePoint : MagneticObject
 {
     Grappling grapple;
-    MagnetGuns gun;
+    MagnetGuns magGun;
     [SerializeField] private Transform grapplePoint;
     private void Awake()
     {
         grapple = FindObjectOfType<Grappling>();
     }
-    public override void Connect(Transform conn, Transform mag, Pole pole)
+    public override void Connect(MagnetGuns gun, Transform conn, Transform mag, Pole pole)
     {
-        base.Connect(conn, mag, pole);
-        gun = connection.GetComponentInParent<MagnetGuns>();
+        base.Connect(gun, conn, mag, pole);
+        magGun = connection.GetComponentInParent<MagnetGuns>();
         magnet.position = grapplePoint.position;
         magnet.rotation = grapplePoint.rotation;
         grapple.StartGrapple(grapplePoint.position, gun);
@@ -22,7 +22,7 @@ public class GrapplePoint : MagneticObject
     public override void Disconnect()
     {
         base.Disconnect();
-        grapple.EndGrapple(gun);
-        gun = null;
+        grapple.EndGrapple(magGun);
+        magGun = null;
     }
 }

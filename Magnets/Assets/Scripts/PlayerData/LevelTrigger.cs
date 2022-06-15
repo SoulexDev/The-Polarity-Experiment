@@ -9,8 +9,8 @@ public class LevelTrigger : MonoBehaviour
     bool eventPlayed = false;
     private void Start()
     {
-        if(GameProgression.Instance != null)
-            levelTrigger.AddListener(() => GameProgression.Instance.EnterNewLevel(transform.position));
+        //if(GameProgression.Instance != null)
+        //    levelTrigger.AddListener(() => GameProgression.Instance.EnterNewLevel(transform.position));
     }
     private void OnTriggerEnter(Collider other)
     {

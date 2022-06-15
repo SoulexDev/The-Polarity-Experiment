@@ -20,7 +20,16 @@ public class MagnetPhysicsObject : MagneticObject
     {
         base.Execute();
         if(magnet != null)
-            rb.AddForceAtPosition((connection.position - rb.position).normalized * Time.deltaTime * grabSpeed, magnet.position, ForceMode.VelocityChange);
+        {
+            Vector3 dir = (connection.position - rb.position).normalized;
+            Vector3 multDir;
+            if (Physics.Linecast(rb.position, connection.position, out RaycastHit hit))
+            {
+                multDir = Vector3.ProjectOnPlane(dir, hit.normal).normalized;
+                dir = multDir;
+            }
+            rb.AddForceAtPosition(dir * Time.deltaTime * grabSpeed, magnet.position, ForceMode.VelocityChange);
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {

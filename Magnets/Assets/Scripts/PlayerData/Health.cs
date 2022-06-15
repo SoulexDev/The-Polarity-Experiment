@@ -60,6 +60,7 @@ public class Health : MonoBehaviour, IPlayer
         Player.Instance.dead = false;
         Player.Instance.canMove = true;
         health = maxHealth;
+        healthBar.fillAmount = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     void AwakeGameProgression()

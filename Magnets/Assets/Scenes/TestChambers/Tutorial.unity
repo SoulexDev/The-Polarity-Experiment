@@ -812,7 +812,7 @@ AudioSource:
   m_GameObject: {fileID: 275847974}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2517493127162407317, guid: 493345cab9f44804e9d1dc3359cb7444, type: 2}
   m_audioClip: {fileID: 8300000, guid: 037ad8c81d79a004ea6923fccbbb576f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -908,7 +908,7 @@ AudioSource:
   m_GameObject: {fileID: 275847974}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8544975321379006245, guid: 493345cab9f44804e9d1dc3359cb7444, type: 2}
   m_audioClip: {fileID: 8300000, guid: 681c3aeee43863f4083878499a9dbd14, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1004,7 +1004,7 @@ AudioSource:
   m_GameObject: {fileID: 275847974}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2517493127162407317, guid: 493345cab9f44804e9d1dc3359cb7444, type: 2}
   m_audioClip: {fileID: 8300000, guid: d48d9f14460db81449fc16b943a5ecb0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2271,7 +2271,7 @@ PrefabInstance:
     - target: {fileID: 8977483294208790205, guid: adff6b3ab2bb14f44aa6a7b6da9ccf60, type: 3}
       propertyPath: interactEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 275847976}
+      objectReference: {fileID: 275847978}
     - target: {fileID: 8977483294208790205, guid: adff6b3ab2bb14f44aa6a7b6da9ccf60, type: 3}
       propertyPath: interactEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -2287,7 +2287,7 @@ PrefabInstance:
     - target: {fileID: 8977483294208790205, guid: adff6b3ab2bb14f44aa6a7b6da9ccf60, type: 3}
       propertyPath: interactEvent.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
-      objectReference: {fileID: 275847976}
+      objectReference: {fileID: 275847977}
     - target: {fileID: 8977483294208790205, guid: adff6b3ab2bb14f44aa6a7b6da9ccf60, type: 3}
       propertyPath: interactEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2

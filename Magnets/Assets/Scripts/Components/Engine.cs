@@ -30,9 +30,9 @@ public class Engine : MagneticObject, ISource
         rend.sharedMaterials = mats;
         source = GetComponents<AudioSource>();
     }
-    public override void Connect(Transform conn, Transform mag, Pole pole)
+    public override void Connect(MagnetGuns gun, Transform conn, Transform mag, Pole pole)
     {
-        base.Connect(conn, mag, pole);
+        base.Connect(gun, conn, mag, pole);
         magnet.position = connectionPoint.position;
         magnet.rotation = connectionPoint.rotation * Quaternion.Euler(new Vector3(90, 0, 0));
     }

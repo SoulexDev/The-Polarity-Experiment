@@ -10,10 +10,12 @@ public class MagneticObject : MonoBehaviour
     public Rigidbody rb;
     public Transform connection;
     public Transform magnet;
+    public MagnetGuns magnetGun;
     public bool connected = false;
 
-    public virtual void Connect(Transform conn, Transform mag, Pole pole)
+    public virtual void Connect(MagnetGuns gun, Transform conn, Transform mag, Pole pole)
     {
+        magnetGun = gun;
         connection = conn;
         magnet = mag;
         conPole = pole;

@@ -31,8 +31,14 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+    }
+    private void OnEnable()
+    {
+        PauseMenu.OnPause += ChangeSensitivity;
+    }
+    private void OnDisable()
+    {
+        PauseMenu.OnPause -= ChangeSensitivity;
     }
 
     void Update()
@@ -42,15 +48,6 @@ public class PlayerController : MonoBehaviour
         PlayerInput();
         CamMovement();
         Movement();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.visible = !Cursor.visible;
-            if (Cursor.lockState == CursorLockMode.Locked)
-                Cursor.lockState = CursorLockMode.None;
-            else
-                Cursor.lockState = CursorLockMode.Locked;
-        }
     }
     void PlayerInput()
     {
@@ -59,6 +56,10 @@ public class PlayerController : MonoBehaviour
         camX += Input.GetAxis("Mouse X") * camMoveSpeed;
         camY += Input.GetAxis("Mouse Y") * camMoveSpeed;
         camY = Mathf.Clamp(camY, -90, 90);
+    }
+    void ChangeSensitivity()
+    {
+        camMoveSpeed = PlayerPrefs.GetFloat("Sensitivity");
     }
     void Movement()
     {

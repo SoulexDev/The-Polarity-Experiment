@@ -24,7 +24,7 @@ public class LevelManager : MonoBehaviour
     }
     private void Awake()
     {
-        audioMixer.GetFloat("Volume", out vol);
+        audioMixer.GetFloat("SFX", out vol);
         vol = Mathf.Pow(10, vol / 20);
         vol = Mathf.Clamp01(vol);
     }
@@ -64,7 +64,9 @@ public class LevelManager : MonoBehaviour
                 vol += Time.deltaTime;
                 vol = Mathf.Clamp01(vol);
                 float adjustedValue = Mathf.Log10(vol) * 20;
-                audioMixer.SetFloat("Volume", adjustedValue);
+                if (vol == 0)
+                    adjustedValue = -80;
+                audioMixer.SetFloat("SFX", adjustedValue);
                 yield return null;
             }
             vol = 1;
@@ -76,7 +78,9 @@ public class LevelManager : MonoBehaviour
                 vol -= Time.deltaTime;
                 vol = Mathf.Clamp01(vol);
                 float adjustedValue = Mathf.Log10(vol) * 20;
-                audioMixer.SetFloat("Volume", adjustedValue);
+                if (vol == 0)
+                    adjustedValue = -80;
+                audioMixer.SetFloat("SFX", adjustedValue);
                 yield return null;
             }
             vol = 0;

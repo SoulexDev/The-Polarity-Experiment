@@ -6,6 +6,7 @@ public class MagnetGuns : MonoBehaviour
 {
     [SerializeField] private string mouseInput = "Fire1";
     public Transform magnetBone;
+    public Vector3 pointPos;
     [SerializeField] private Transform cableBone;
     [SerializeField] private Transform gunBone;
     [SerializeField] private Transform cam;
@@ -18,7 +19,7 @@ public class MagnetGuns : MonoBehaviour
     private TubeRenderer cable;
 
     //Cable
-    [SerializeField] private List<Vector3> points = new List<Vector3>();
+    [SerializeField] private List<EdgePoint> points = new List<EdgePoint>();
     public int curPoint = 0;
 
     bool extended = false;
@@ -39,8 +40,12 @@ public class MagnetGuns : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
         cable = GetComponent<TubeRenderer>();
-        //points.Add(magnetBone.position);
-        //points.Add(gunBone.position);
+        EdgePoint magPoint = new EdgePoint();
+        EdgePoint gunPoint = new EdgePoint();
+        magPoint.position = magnetBone.position;
+        gunPoint.position = gunBone.position;
+        points.Add(magPoint);
+        points.Add(gunPoint);
     }
     void Start()
     {
@@ -68,40 +73,50 @@ public class MagnetGuns : MonoBehaviour
     }
     private void LateUpdate()
     {
-        //UpdateCables();
+        UpdateCables();
     }
     void UpdateCables()
     {
         RaycastHit hit;
         RaycastHit hit2;
-        points[0] = magnetBone.position;
-        points[points.Count - 1] = gunBone.position;
-        Vector3 dir = (points[curPoint] - points[points.Count - 1]).normalized;
+        points[0].position = magnetBone.position;
+        points[points.Count - 1].position = gunBone.position;
+        Vector3 dir = (points[points.Count - 1].position - points[curPoint].position).normalized;
+        float curDot = Vector3.Dot(points[curPoint].normal, dir);
 
-        if(Physics.Linecast(points[points.Count - 1], points[curPoint], out hit, ropeMask))
-        {
-            if (hit.distance < 0.2f)
-                return;
-        }
+        //if(Physics.Linecast(points[points.Count - 1], points[curPoint], out hit, ropeMask))
+        //{
+        //    if (hit.distance < 0.2f)
+        //        return;
+        //}
 
-        if (Physics.Linecast(points[curPoint], points[points.Count - 1], out hit, ropeMask))
+        if (Physics.Linecast(points[points.Count - 1].position, points[curPoint].position, out hit, ropeMask))
         {
             Vector3 point = hit.point;
+            Vector3 outDir = hit.normal;
 
-            if (Physics.Raycast(gunBone.position, dir, out hit2, ropeMask))
+            if (Physics.Raycast(points[curPoint].position, dir, out hit2, ropeMask))
             {
                 Vector3 trigDir = hit2.point - hit.point;
-                Vector3 outDir = hit.normal + hit2.normal;
+                outDir = hit.normal + hit2.normal;
                 outDir *= 0.1f;
                 point = Vector3.ProjectOnPlane(trigDir, hit.normal) + hit.point + outDir;
             }
             curPoint++;
-            points.Insert(curPoint, point);
+            points[curPoint].dot = Vector3.Dot(hit2.normal, dir);
+            points[curPoint].normal = hit2.normal;
+            EdgePoint edgePoint = new EdgePoint();
+            edgePoint.position = point;
+            points.Insert(curPoint, edgePoint);
         }
-        if(curPoint > 0 && !Physics.Linecast(points[curPoint - 1], points[points.Count - 1], ropeMask))
+        //if(curPoint > 0 && points[curPoint].dot > curDot)
+        //{
+        //    points.RemoveAt(curPoint);
+        //    curPoint--;
+        //}
+        if (curPoint > 0 && !Physics.Linecast(points[curPoint - 1].position, points[points.Count - 1].position, ropeMask))
         {
-            Vector3 preDir = (points[curPoint - 1] - points[points.Count - 1]).normalized;
-
+            Vector3 preDir = (points[curPoint - 1].position - points[points.Count - 1].position).normalized;
             float angle = Vector3.Angle(dir, preDir);
             if (angle < 10 || angle > 170)
             {
@@ -109,7 +124,13 @@ public class MagnetGuns : MonoBehaviour
                 curPoint--;
             }
         }
-        cable.SetPositions(points.ToArray());
+        pointPos = points[curPoint].position;
+        Vector3[] pointsPos = new Vector3[points.Count];
+        for (int i = 0; i < points.Count; i++)
+        {
+            pointsPos[i] = points[i].position;
+        }
+        cable.SetPositions(pointsPos);
     }
     void PlayerInput()
     {
@@ -178,7 +199,16 @@ public class MagnetGuns : MonoBehaviour
         {
             if (Vector3.Distance(magnetBone.position, gunBone.TransformPoint(ogPos)) > 0.15f)
             {
-                magnetBone.position = Vector3.MoveTowards(magnetBone.position, gunBone.TransformPoint(ogPos), 0.35f * Time.deltaTime * 60);
+                Vector3 travelPos = curPoint == 0 ? gunBone.TransformPoint(ogPos) : pointPos;
+
+                magnetBone.position = Vector3.MoveTowards(magnetBone.position, travelPos, 0.35f * Time.deltaTime * 60);
+
+                if(curPoint > 0 && Vector3.Distance(magnetBone.position, travelPos) < 1)
+                {
+                    points.RemoveAt(curPoint);
+                    curPoint--;
+                }
+
                 if(!source.isPlaying)
                     source.PlayOneShot(ropeClips[1]);
             }
@@ -221,7 +251,7 @@ public class MagnetGuns : MonoBehaviour
             {
                 conMag = magneticObject;
                 magnetBone.rotation = gRot;
-                conMag.Connect(gunBone, magnetBone, pole);
+                conMag.Connect(this, gunBone, magnetBone, pole);
                 connected = true;
                 source.Stop();
                 StopAllCoroutines();
@@ -284,4 +314,10 @@ public class MagnetGuns : MonoBehaviour
         letGo = false;
         connected = false;
     }
+}
+public class EdgePoint
+{
+    public Vector3 position;
+    public Vector3 normal;
+    public float dot;
 }
